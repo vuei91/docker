@@ -2,7 +2,8 @@ version: "0.1"
 
 services:
   db:
-    build: .
+    build: ../
+    image: ghcr.io/vuei91/database:0.1
     container_name: database
     restart: always
     ports:
@@ -14,11 +15,10 @@ services:
     command:
       - --character-set-server=utf8mb4
       - --collation-server=utf8mb4_unicode_ci
-    volumes:
-      - ./init.d:/docker-entrypoint-initdb.d
 
   backend:
-    build: ../nursing-home-server/server
+    build: ../../nursing-home-server/server
+    image: ghcr.io/vuei91/backend:0.1
     container_name: backend
     restart: always
     ports:
@@ -31,7 +31,8 @@ services:
       - db
 
   frontend:
-    build: ../nursing-home
+    build: ../../nursing-home
+    image: ghcr.io/vuei91/frontend:0.1
     container_name: frontend
     restart: always
     ports:
