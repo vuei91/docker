@@ -2,6 +2,7 @@ version: "0.1"
 
 services:
   db:
+    platform: linux/amd64
     build: ../
     image: ghcr.io/vuei91/database:0.1
     container_name: database
@@ -17,6 +18,7 @@ services:
       - --collation-server=utf8mb4_unicode_ci
 
   backend:
+    platform: linux/amd64
     build: ../../nursing-home-server/server
     image: ghcr.io/vuei91/backend:0.1
     container_name: backend
@@ -32,14 +34,15 @@ services:
       NAVER_CLIENT_ID: ${NAVER_CLIENT_ID}
       NAVER_CLIENT_SECRET: ${NAVER_CLIENT_SECRET}
       JWT_SECRET: ${JWT_SECRET}
+      FRONTEND_URL: ${FRONTEND_URL}
     depends_on:
       - db
 
   frontend:
+    platform: linux/amd64
     build: ../../nursing-home
     image: ghcr.io/vuei91/frontend:0.1
     container_name: frontend
     restart: always
     ports:
       - 80:3000
-    command: node server.js
